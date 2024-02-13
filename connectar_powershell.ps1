@@ -53,7 +53,7 @@ function agafarDades {
     $alpine_plantilla=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
 }
 
-connectar
+$connexio = connectar
 #crearAlpine
 agafarDades
 
