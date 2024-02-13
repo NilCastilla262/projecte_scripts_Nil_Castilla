@@ -1,3 +1,12 @@
+function connectar {
+    param (
+        
+    )
+    Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false >>/dev/null
+    Connect-VIServer -Server 172.24.20.111 -User root -Password Patata123* >>/dev/null
+
+}
+
 function crearAlpine {
     # Variables
     $VMName = "AlpineNil"
@@ -25,9 +34,17 @@ function installOS {
     $installCommand = "/bin/sh $installScriptPath"
     Invoke-VMScript -VM $VMName -ScriptType Bash -ScriptText $installCommand
 }
-Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false >>/dev/null
-Connect-VIServer -Server 172.24.20.111 -User root -Password Patata123* >>/dev/null
-#$alpine_bo=Get-VM | Where-Object { ($_.Name -like 'alpine_script*') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
-#$alpine_copy=Get-VM | Where-Object { ($_.Name -like 'alpine_script*') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
 
-crearAlpine
+function agafarDades {
+    param (
+    )
+    $alpine_on=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
+    $alpine_off=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    $alpine_plantilla=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+}
+
+connectar
+#crearAlpine
+agafarDades
+
+
