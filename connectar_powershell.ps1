@@ -8,6 +8,13 @@ function connectar {
     return $connexio_nil
 }
 
+function desconnectar {
+    param (
+        $connexio
+    )
+
+    Disconnect-VIServer -Server $connexio -Confirm:$false
+}
 
 
 function crearAlpine {
