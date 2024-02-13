@@ -13,7 +13,7 @@ function desconnectar {
         $connexio
     )
 
-    Disconnect-VIServer -Server $connexio -Confirm:$false
+    Disconnect-VIServer -Server 172.24.20.111 -Confirm:$false
 }
 
 
@@ -54,6 +54,8 @@ function agafarDades {
 }
 
 $connexio = connectar
+Write-Host $connexio
 #crearAlpine
+get-VM
 agafarDades
 desconnectar -connexio $connexio
