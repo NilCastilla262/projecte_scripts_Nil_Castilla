@@ -56,5 +56,4 @@ function agafarDades {
 $connexio = connectar
 #crearAlpine
 agafarDades
-
-
+desconnectar -connexio $connexio
