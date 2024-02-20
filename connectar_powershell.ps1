@@ -54,7 +54,16 @@ function agafarDades {
     return $alpine_on, $alpine_off, $alpine_plantilla
 }
 
+function comprovarConnexio {
+    param (
+        $ip
+    )
+    $apacheUrl = "http://$($ip):80"
+    return Invoke-WebRequest -Uri $apacheUrl
+}
+
 $connexio = connectar
 #crearAlpine
 $alpine_on, $alpine_off, $alpine_plantilla = agafarDades
+$funciona=comprovarConnexio -ip "172.24.20.113"
 desconnectar -connexio $connexio
