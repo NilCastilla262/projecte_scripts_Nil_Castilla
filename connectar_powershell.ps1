@@ -58,12 +58,21 @@ function comprovarConnexio {
     param (
         $ip
     )
-    $apacheUrl = "http://$($ip):80"
-    return Invoke-WebRequest -Uri $apacheUrl
+    try {
+        $apacheUrl = "http://$($ip):80"
+        $response = Invoke-WebRequest -Uri $apacheUrl >>/dev/null
+        if ($response.StatusCode -eq 200) {
+            Write-Host "El servei Apache funcionana"
+        } else {
+            Write-Host "El servei Apache no funcionana"
+        }
+    } catch {
+        Write-Host "No s'ha pogut establir la connexio amb la url $apacheUrl."
+    }
 }
 
 $connexio = connectar
 #crearAlpine
 $alpine_on, $alpine_off, $alpine_plantilla = agafarDades
-$funciona=comprovarConnexio -ip "172.24.20.113"
+comprovarConnexio -ip "172.24.20.114"
 desconnectar -connexio $connexio
