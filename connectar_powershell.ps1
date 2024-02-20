@@ -51,11 +51,12 @@ function agafarDades {
     $alpine_on=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
     $alpine_off=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
     $alpine_plantilla=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    return $alpine_on, $alpine_off, $alpine_plantilla
 }
 
 $connexio = connectar
 #crearAlpine
-agafarDades
+$alpine_on, $alpine_off, $alpine_plantilla = agafarDades
 echo $alpine_on
 Write-Host "-------------"
 echo $alpine_off
