@@ -3,7 +3,7 @@ function connectar {
         
     )
     Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false >>/dev/null
-    $connexio_nil = Connect-VIServer -Server 172.24.20.111 -User root -Password Patata123* >>/dev/null
+    $connexio_nil = Connect-VIServer -Server 172.24.20.111 -User root -Password Patata123*
 
     return $connexio_nil
 }
@@ -13,7 +13,7 @@ function desconnectar {
         $connexio
     )
 
-    Disconnect-VIServer -Server 172.24.20.111 -Confirm:$false
+    Disconnect-VIServer -Server $connexio -Confirm:$false
 }
 
 
