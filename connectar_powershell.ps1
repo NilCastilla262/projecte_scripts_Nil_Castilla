@@ -57,10 +57,4 @@ function agafarDades {
 $connexio = connectar
 #crearAlpine
 $alpine_on, $alpine_off, $alpine_plantilla = agafarDades
-echo $alpine_on
-Write-Host "-------------"
-echo $alpine_off
-Write-Host "-------------"
-echo $alpine_plantilla
-Write-Host "-------------"
 desconnectar -connexio $connexio
