@@ -48,7 +48,7 @@ function installOS {
 function agafarVMOff {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
     if ($mv -eq $null){
         
     }
@@ -58,7 +58,7 @@ function agafarVMOff {
 function agafarVMOn {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
         
     }
@@ -68,7 +68,7 @@ function agafarVMOn {
 function agafarVMPlantilla {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
         
     }
