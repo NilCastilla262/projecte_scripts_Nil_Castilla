@@ -76,7 +76,7 @@ $connexio = connectar
 $alpine_on, $alpine_off, $alpine_plantilla = agafarDades
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
-    Write-Host "Funciona"
+#    "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" >> /var/log/projecte.log
 }
 else {
     Write-Host "no funciona"
