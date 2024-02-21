@@ -66,6 +66,17 @@ function agafarDadesPlantilla {
     return $mv
 }
 
+function comprovarExisteix {
+    param (
+        $mv
+    )
+    if ($alpine_on -ne $null){
+        return $true
+    }
+    else {
+        return $false
+    }
+}
 
 function comprovarConnexio {
     param (
