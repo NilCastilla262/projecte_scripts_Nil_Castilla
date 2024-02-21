@@ -49,7 +49,7 @@ function agafarDadesOff {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
-    comprovarExisteix -mv $mv
+    $funciona = comprovarExisteix -mv $mv
     return $mv
 }
 
@@ -57,7 +57,7 @@ function agafarDadesOn {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    comprovarExisteix -mv $mv
+    $funciona = comprovarExisteix -mv $mv
     return $mv
 }
 
@@ -65,7 +65,7 @@ function agafarDadesPlantilla {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    comprovarExisteix -mv $mv
+    $funciona = comprovarExisteix -mv $mv
     return $mv
 }
 
