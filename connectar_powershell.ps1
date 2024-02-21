@@ -50,6 +50,9 @@ function agafarDadesOff {
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
     $funciona = comprovarExisteix -mv $mv
+    if (!$funciona){
+        
+    }
     return $mv
 }
 
