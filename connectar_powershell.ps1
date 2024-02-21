@@ -45,7 +45,7 @@ function installOS {
     Invoke-VMScript -VM $VMName -ScriptType Bash -ScriptText $installCommand
 }
 
-function agafarDadesOff {
+function agafarVMOff {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
@@ -56,7 +56,7 @@ function agafarDadesOff {
     return $mv
 }
 
-function agafarDadesOn {
+function agafarVMOn {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
@@ -67,7 +67,7 @@ function agafarDadesOn {
     return $mv
 }
 
-function agafarDadesPlantilla {
+function agafarVMPlantilla {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
@@ -82,7 +82,7 @@ function comprovarExisteix {
     param (
         $mv
     )
-    if ($alpine_on -ne $null){
+    if ($mv -ne $null){
         return $true
     }
     else {
@@ -109,9 +109,9 @@ function comprovarConnexio {
 
 $connexio = connectar
 #crearAlpine
-$alpine_plantilla = agafarDadesPlantilla
-$alpine_off = agafarDadesOff
-$alpine_on = agafarDadesOn
+$alpine_plantilla = agafarVMPlantilla
+$alpine_off = agafarVMOff
+$alpine_on = agafarVMOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
 #    "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" >> /var/log/projecte.log
