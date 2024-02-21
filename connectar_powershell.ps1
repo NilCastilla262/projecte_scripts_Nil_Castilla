@@ -103,9 +103,9 @@ function comprovarConnexio {
 
 $connexio = connectar
 #crearAlpine
-$alpine_on = agafarDadesOn
-$alpine_off = agafarDadesOff
 $alpine_plantilla = agafarDadesPlantilla
+$alpine_off = agafarDadesOff
+$alpine_on = agafarDadesOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
 #    "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" >> /var/log/projecte.log
