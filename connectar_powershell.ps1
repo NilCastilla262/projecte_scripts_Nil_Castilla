@@ -45,14 +45,27 @@ function installOS {
     Invoke-VMScript -VM $VMName -ScriptType Bash -ScriptText $installCommand
 }
 
-function agafarDades {
+function agafarDadesOff {
     param (
     )
-    $alpine_on=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
-    $alpine_off=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    $alpine_plantilla=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    return $alpine_on, $alpine_off, $alpine_plantilla
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
+    return $mv
 }
+
+function agafarDadesOn {
+    param (
+    )
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    return $mv
+}
+
+function agafarDadesPlantilla {
+    param (
+    )
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    return $mv
+}
+
 
 function comprovarConnexio {
     param (
@@ -73,7 +86,9 @@ function comprovarConnexio {
 
 $connexio = connectar
 #crearAlpine
-$alpine_on, $alpine_off, $alpine_plantilla = agafarDades
+$alpine_on = agafarDadesOn
+$alpine_off = agafarDadesOff
+$alpine_plantilla = agafarDadesPlantilla
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
 #    "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" >> /var/log/projecte.log
