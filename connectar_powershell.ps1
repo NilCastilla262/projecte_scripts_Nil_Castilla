@@ -64,9 +64,9 @@ function agafarVMPlantilla {
 function agafarVMOff {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
+    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-        
+        clonarVM
     }
     return $mv
 }
@@ -74,8 +74,9 @@ function agafarVMOff {
 function agafarVMOn {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
+    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
     if ($mv -eq $null){
+
     }
     return $mv
 }
@@ -106,6 +107,19 @@ function Write-Log {
 
     $LogEntry = "$(Get-Date) [$Level] - $Message"
     Add-Content -Path $Path -Value $LogEntry
+}
+
+function clonarVM {
+    param (
+    )
+    $vmPlantilla = "alpine_script_nil_plantilla"
+    $clonName = "alpine_script_nil_off"
+    $clonDatastore = "datastoreBSD"
+
+    # Clonar la màquina virtual
+    New-VM -Name $clonName -VM $vmPlantilla -Datastore $clonDatastore -ResourcePool $clonResourcePool
+
+        
 }
 
 #Ffuncions
