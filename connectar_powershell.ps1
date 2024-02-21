@@ -63,10 +63,11 @@ function agafarVMPlantilla {
 
 function agafarVMOff {
     param (
+        $vmPlantilla
     )
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-        clonarVM
+        clonarVM -vmPlantilla $vmPlantilla
     }
     return $mv
 }
@@ -111,8 +112,8 @@ function Write-Log {
 
 function clonarVM {
     param (
+        $vmPlantilla
     )
-    $vmPlantilla = "alpine_script_nil_plantilla"
     $clonName = "alpine_script_nil_off"
     $clonDatastore = "datastoreBSD"
 
@@ -127,7 +128,7 @@ function clonarVM {
 $connexio = connectar
 #crearAlpine
 $alpine_plantilla = agafarVMPlantilla
-$alpine_off = agafarVMOff
+$alpine_off = agafarVMOff -vmPlantilla $alpine_plantilla
 $alpine_on = agafarVMOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
