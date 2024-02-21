@@ -53,6 +53,16 @@ function installOS {
     Invoke-VMScript -VM $VMName -ScriptType Bash -ScriptText $installCommand
 }
 
+function agafarVMPlantilla {
+    param (
+    )
+    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') }
+    if ($mv -eq $null){
+        Write-Log -Message "No es troba la plantilla" -Path $LOGDIR -Level Warning
+    }
+    return $mv
+}
+
 function agafarVMOff {
     param (
     )
@@ -68,16 +78,6 @@ function agafarVMOn {
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-    }
-    return $mv
-}
-
-function agafarVMPlantilla {
-    param (
-    )
-    $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') }
-    if ($mv -eq $null){
-        
     }
     return $mv
 }
