@@ -72,10 +72,12 @@ function comprovarExisteix {
         $mv
     )
     if ($alpine_on -ne $null){
+        Write-Host "existeix"
         return $true
     }
     else {
         return $false
+        Write-Host "No existeix"
     }
 }
 
