@@ -49,8 +49,7 @@ function agafarVMOff {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
-    $funciona = comprovarExisteix -mv $mv
-    if (!$funciona){
+    if ($mv -eq $null){
         
     }
     return $mv
@@ -60,8 +59,7 @@ function agafarVMOn {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    $funciona = comprovarExisteix -mv $mv
-    if (!$funciona){
+    if ($mv -eq $null){
         
     }
     return $mv
@@ -71,23 +69,10 @@ function agafarVMPlantilla {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
-    $funciona = comprovarExisteix -mv $mv
-    if (!$funciona){
+    if ($mv -eq $null){
         
     }
     return $mv
-}
-
-function comprovarExisteix {
-    param (
-        $mv
-    )
-    if ($mv -ne $null){
-        return $true
-    }
-    else {
-        return $false
-    }
 }
 
 function comprovarConnexio {
