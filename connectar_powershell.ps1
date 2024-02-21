@@ -1,3 +1,11 @@
+Import-Module Microsoft.PowerShell.Management
+
+#Constants
+$LOGDIR="/var/log/projectelog.txt"
+#Fconstants
+
+#Funcions
+
 function connectar {
     param (
         
@@ -91,6 +99,8 @@ function comprovarConnexio {
     }
 }
 
+#Ffuncions
+
 $connexio = connectar
 #crearAlpine
 $alpine_plantilla = agafarVMPlantilla
@@ -98,7 +108,7 @@ $alpine_off = agafarVMOff
 $alpine_on = agafarVMOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
-#    "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" >> /var/log/projecte.log
+Write-Log -Message "[$(Get-Date)] La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
     Write-Host "no funciona"
