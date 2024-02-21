@@ -49,6 +49,7 @@ function agafarDadesOff {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') } | Format-List
+    comprovarExisteix -mv $mv
     return $mv
 }
 
@@ -56,6 +57,7 @@ function agafarDadesOn {
     param (
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') } | Format-List
+    comprovarExisteix -mv $mv
     return $mv
 }
 
@@ -72,12 +74,10 @@ function comprovarExisteix {
         $mv
     )
     if ($alpine_on -ne $null){
-        Write-Host "existeix"
         return $true
     }
     else {
         return $false
-        Write-Host "No existeix"
     }
 }
 
