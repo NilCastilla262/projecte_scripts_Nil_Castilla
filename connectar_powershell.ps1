@@ -60,10 +60,6 @@ function agafarVMOn {
     )
     $mv=Get-VM | Where-Object { ($_.Name -like 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-        Write-Host "Es null"
-    }
-    else {
-        Write-Host "Funciona"
     }
     return $mv
 }
