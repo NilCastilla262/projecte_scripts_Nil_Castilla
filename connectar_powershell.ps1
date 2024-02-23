@@ -85,13 +85,19 @@ function comprovarConnexio {
         $apacheUrl = "http://$($ip):80"
         $response = Invoke-WebRequest -Uri $apacheUrl
         if ($response.StatusCode -eq 200) {
-            return $true
+            $funiona = $true
         } else {
-            return $false
+            $funiona = $false
         }
     } catch {
-        return $false
+        $funiona = $false
     }
+    if ($funiona) {
+        Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
+        }
+        else {
+            Write-Host "no funciona"
+        }
 }
 
 function Write-Log {
@@ -121,15 +127,15 @@ function clonarVM {
 #Ffuncions
 
 $connexio = connectar
-#crearAlpine
+#Comprovar que existeixen les maquines i la plantilla, en cas de que no existeixin les maquines les crea
+
 $alpine_plantilla = agafarPlantilla
+
 $alpine_off = agafarVMOff -plantilla $alpine_plantilla
+
 $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
+
+#Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
 $funiona=comprovarConnexio -ip "172.24.20.113"
-if ($funiona) {
-Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
-}
-else {
-    Write-Host "no funciona"
-}
+
 desconnectar -connexio $connexio
