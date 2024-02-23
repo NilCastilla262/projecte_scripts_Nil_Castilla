@@ -69,11 +69,11 @@ function agafarPlantilla {
 
 function agafarVMOff {
     param (
-        $vmPlantilla
+        $plantilla
     )
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-        clonarVM -vmPlantilla $vmPlantilla
+        clonarVM -plantilla $plantilla
     }
     return $mv
 }
@@ -122,7 +122,6 @@ function clonarVM {
     )
 
     # Obtenir la instància de la màquina virtual plantilla
-    $plantilla = Get-VM -Name $vmPlantilla
     $clonName = "alpine_script_nil_off"
     $clonDatastore = "datastoreBSD"
     $esxiHost = "172.24.20.111"
