@@ -118,6 +118,26 @@ function clonarVM {
     # Clonar la màquina virtual
     New-VM -Template $plantilla -Name $clonName -Datastore $clonDatastore -VMHost $esxiHost
 }
+
+function eliminarVM {
+    param ()
+    
+    $vmName = "alpine_script_nil_on"
+
+    try {
+        #Intenta parar la VM
+        $vm = Get-VM -Name $vmName
+        Stop-VM -VM $vm -Confirm:$false -ErrorAction Stop
+
+        #Eliminem la VM
+        Remove-VM -VM $vm -Confirm:$false -ErrorAction Stop
+
+        Write-Log -Message "Eliminada la VM alpine on ja que no funcionava el servei web" -Path $LOGDIR -Level Info
+    } catch {
+        Write-Log -Message "Error al parar o eliminar la VM alpine On, el servei web no esta funcionant" -Path $LOGDIR -Level Error
+    }
+}
+
 #Ffuncions
 
 $connexio = connectar
@@ -135,6 +155,7 @@ if ($funiona) {
 Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
-    Write-Host "no funciona"
+    eliminarVM
+    $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 }
 desconnectar -connexio $connexio
