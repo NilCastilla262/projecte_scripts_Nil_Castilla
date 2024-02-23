@@ -118,24 +118,24 @@ function Write-Log {
 
 function clonarVM {
     param (
-        $vmPlantilla
+        $plantilla
     )
 
     # Obtenir la instància de la màquina virtual plantilla
     $plantilla = Get-VM -Name $vmPlantilla
     $clonName = "alpine_script_nil_off"
     $clonDatastore = "datastoreBSD"
+    $esxiHost = "172.24.20.111"
 
     # Clonar la màquina virtual
-    New-VM -VM $plantilla -Name $clonName -Datastore $clonDatastore
+    New-VM -Template $plantilla -Name $clonName -Datastore $clonDatastore -VMHost $esxiHost
 }
-
 #Ffuncions
 
 $connexio = connectar
 #crearAlpine
 $alpine_plantilla = agafarPlantilla
-$alpine_off = agafarVMOff -vmPlantilla $alpine_plantilla
+$alpine_off = agafarVMOff -plantilla $alpine_plantilla
 $alpine_on = agafarVMOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
