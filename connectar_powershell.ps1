@@ -12,7 +12,8 @@ function connectar {
     )
     Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false >>/dev/null
     $connexio_nil = Connect-VIServer -Server 172.24.20.3 -User administrator@vsphere.local -Password Patata1234*
-
+    Write-Host "1"
+    Write-Host "$connexio_nil"
     return $connexio_nil
 }
 
@@ -35,6 +36,7 @@ function installOS {
 function agafarPlantilla {
     param (
     )
+    Write-Output "a"
     try {
         $template = Get-Template -Name 'alpine_script_nil_plantilla' -ErrorAction Stop
     } catch {
@@ -50,6 +52,7 @@ function agafarVMOff {
     param (
         $plantilla
     )
+    Write-Output "b"
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
         clonarVM -plantilla $plantilla
@@ -63,6 +66,7 @@ function agafarVMOn {
         $alpineOff,
         $plantilla
     )
+    Write-Output "c"
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
     if ($mv -eq $null){
         #Canviar nom i engegar VM Off
@@ -83,7 +87,7 @@ function comprovarConnexio {
     )
     try {
         $apacheUrl = "http://$($ip):80"
-        $response = Invoke-WebRequest -Uri $apacheUrl
+        $response = Invoke-WebRequest -Uri $apacheUrl -TimeoutSec 5
         if ($response.StatusCode -eq 200) {
             return $true
         } else {
@@ -142,11 +146,11 @@ function eliminarVM {
 
 $connexio = connectar
 #Comprovar que existeixen les maquines i la plantilla, en cas de que no existeixin les maquines les crea
-
+Write-Output "a"
 $alpine_plantilla = agafarPlantilla
-
+Write-Output "b"
 $alpine_off = agafarVMOff -plantilla $alpine_plantilla
-
+Write-Output "c"
 $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 
 #Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
@@ -155,7 +159,7 @@ if ($funiona) {
 Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
-    eliminarVM
-    $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
+    #eliminarVM
+    #$alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 }
 desconnectar -connexio $connexio
