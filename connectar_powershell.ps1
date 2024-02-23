@@ -1,3 +1,5 @@
+Import-Module VMware.VimAutomation.Core
+
 #Constants
 $LOGDIR="/var/log/projecte.log"
 #Fconstants
@@ -9,7 +11,7 @@ function connectar {
         
     )
     Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false >>/dev/null
-    $connexio_nil = Connect-VIServer -Server 172.24.20.111 -User root -Password Patata123*
+    $connexio_nil = Connect-VIServer -Server 172.24.20.3 -User administrator@vsphere.local -Password Patata1234*
 
     return $connexio_nil
 }
@@ -114,13 +116,14 @@ function clonarVM {
     param (
         $vmPlantilla
     )
+
+    # Obtenir la instància de la màquina virtual plantilla
+    $plantilla = Get-VM -Name $vmPlantilla
     $clonName = "alpine_script_nil_off"
     $clonDatastore = "datastoreBSD"
 
     # Clonar la màquina virtual
-    New-VM -Name $clonName -VM $vmPlantilla -Datastore $clonDatastore -ResourcePool $clonResourcePool
-
-        
+    New-VM -VM $plantilla -Name $clonName -Datastore $clonDatastore
 }
 
 #Ffuncions
