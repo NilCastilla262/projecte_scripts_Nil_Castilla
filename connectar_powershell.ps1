@@ -86,7 +86,7 @@ function agafarVMOn {
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
     if ($mv -eq $null){
         #Canviar nom i engegar VM Off
-        Set-VM -VM $alpineOff -Name 'alpine_script_nil_on'
+        Set-VM -VM $alpineOff -Name 'alpine_script_nil_on' -Confirm:$false
         Start-VM -VM $alpineOff
         $vm = $alpineOff
 
