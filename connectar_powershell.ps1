@@ -53,7 +53,7 @@ function installOS {
     Invoke-VMScript -VM $VMName -ScriptType Bash -ScriptText $installCommand
 }
 
-function agafarVMPlantilla {
+function agafarPlantilla {
     param (
     )
     try {
@@ -64,7 +64,7 @@ function agafarVMPlantilla {
     if ($template -eq $null){
         Write-Log -Message "No es troba la plantilla" -Path $LOGDIR -Level Warning
     }
-    return $mv
+    return $template
 }
 
 function agafarVMOff {
@@ -73,7 +73,7 @@ function agafarVMOff {
     )
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
     if ($mv -eq $null){
-        #clonarVM -vmPlantilla $vmPlantilla
+        clonarVM -vmPlantilla $vmPlantilla
     }
     return $mv
 }
@@ -134,7 +134,7 @@ function clonarVM {
 
 $connexio = connectar
 #crearAlpine
-$alpine_plantilla = agafarVMPlantilla
+$alpine_plantilla = agafarPlantilla
 $alpine_off = agafarVMOff -vmPlantilla $alpine_plantilla
 $alpine_on = agafarVMOn
 $funiona=comprovarConnexio -ip "172.24.20.113"
