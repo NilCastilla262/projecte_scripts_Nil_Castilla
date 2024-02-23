@@ -80,12 +80,20 @@ function agafarVMOff {
 
 function agafarVMOn {
     param (
+        $alpineOff,
+        $plantilla
     )
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
     if ($mv -eq $null){
+        #Canviar nom i engegar VM Off
+        $alpineOff | Set-VM -NewName 'alpine_script_nil_on'
+        Start-VM -VM $alpineOff
+        $vm = $alpineOff
 
+        #Tornar a crear la VM Off
+        $alpineOff  = agafarVMOff -plantilla $alpine_plantilla
     }
-    return $mv
+    return $mv, $alpineOff
 }
 
 function comprovarConnexio {
@@ -135,7 +143,7 @@ $connexio = connectar
 #crearAlpine
 $alpine_plantilla = agafarPlantilla
 $alpine_off = agafarVMOff -plantilla $alpine_plantilla
-$alpine_on = agafarVMOn
+$alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
 Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
