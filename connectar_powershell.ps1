@@ -56,8 +56,8 @@ function installOS {
 function agafarVMPlantilla {
     param (
     )
-    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_plantilla') -and ($_.PowerState -eq 'PoweredOff') }
-    if ($mv -eq $null){
+    $template = Get-Template -Name 'alpine_script_nil_plantilla'
+    if ($template -eq $null){
         Write-Log -Message "No es troba la plantilla" -Path $LOGDIR -Level Warning
     }
     return $mv
