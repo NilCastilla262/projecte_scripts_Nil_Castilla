@@ -52,7 +52,7 @@ function agafarVMOff {
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') }
     if ($mv -eq $null){
         clonarVM -plantilla $plantilla
-        Write-Log -Message "No s'ha trobat cap maquina alpine off per lo que s'ha clonat el template per crearna una" -Path $LOGDIR -Level Info
+        Write-Log -Message "S'ha creat una nova maquina alpine off ja que o no exeistia o s'ha engegat la anterior." -Path $LOGDIR -Level Info
     }
     return $mv
 }
