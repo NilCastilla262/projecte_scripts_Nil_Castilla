@@ -140,6 +140,19 @@ function eliminarVM {
     }
 }
 
+function aconseguirIP {
+    param (
+        $vm
+    )
+    try {
+        return $vm.Guest.IPAddress[0]
+    }
+    catch {
+        Write-Log -Message "No s'ha pogut obtenir la IP de la VM alpineOn" -Path $LOGDIR -Level Warning
+    }
+
+}
+
 #Ffuncions
 
 $connexio = connectar
@@ -149,7 +162,8 @@ $alpine_off = agafarVMOff -plantilla $alpine_plantilla
 $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 
 #Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
-$funiona=comprovarConnexio -ip "172.24.20.113"
+$ip = aconseguirIP -vm $alpine_on
+$funiona=comprovarConnexio -ip $ip
 if ($funiona) {
     Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
