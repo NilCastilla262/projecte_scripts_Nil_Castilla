@@ -126,8 +126,11 @@ function eliminarVM {
     try {
         #Intenta parar la VM
         $vm = Get-VM | Where-Object { ($_.Name -eq $vmName) }
-        #Stop-VM -VM $vm -Confirm:$false -ErrorAction Stop
-
+        try {
+            Stop-VM -VM $vm -Confirm:$false -ErrorAction Stop
+        } catch {
+            Write-Log -Message "S'ha intentat parar la vm per eliminar-la pero ha donat error, pot ser que sigui perque ja esta parada" -Path $LOGDIR -Level Warning
+        }
         #Eliminem la VM
         Remove-VM -VM $vm -Confirm:$false -ErrorAction Stop
 
@@ -148,7 +151,7 @@ $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_p
 #Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
 $funiona=comprovarConnexio -ip "172.24.20.113"
 if ($funiona) {
-Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
+    Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
     eliminarVM
