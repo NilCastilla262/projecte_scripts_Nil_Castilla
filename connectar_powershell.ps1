@@ -49,7 +49,7 @@ function agafarVMOff {
     param (
         $plantilla
     )
-    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') -and ($_.PowerState -eq 'PoweredOff') }
+    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_off') }
     if ($mv -eq $null){
         clonarVM -plantilla $plantilla
         Write-Log -Message "No s'ha trobat cap maquina alpine off per lo que s'ha clonat el template per crearna una" -Path $LOGDIR -Level Info
@@ -62,7 +62,7 @@ function agafarVMOn {
         $alpineOff,
         $plantilla
     )
-    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') -and ($_.PowerState -eq 'PoweredOn') }
+    $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') }
     if ($mv -eq $null){
         #Canviar nom i engegar VM Off
         Set-VM -VM $alpineOff -Name 'alpine_script_nil_on' -Confirm:$false
