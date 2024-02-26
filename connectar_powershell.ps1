@@ -125,8 +125,8 @@ function eliminarVM {
 
     try {
         #Intenta parar la VM
-        $vm = Get-VM -Name $vmName
-        Stop-VM -VM $vm -Confirm:$false -ErrorAction Stop
+        $vm = Get-VM | Where-Object { ($_.Name -eq $vmName) }
+        #Stop-VM -VM $vm -Confirm:$false -ErrorAction Stop
 
         #Eliminem la VM
         Remove-VM -VM $vm -Confirm:$false -ErrorAction Stop
@@ -151,7 +151,7 @@ if ($funiona) {
 Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
-    #eliminarVM
-    #$alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
+    eliminarVM
+    $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 }
 desconnectar -connexio $connexio
