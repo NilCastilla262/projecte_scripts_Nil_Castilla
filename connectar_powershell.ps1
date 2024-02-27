@@ -65,15 +65,21 @@ function agafarVMOn {
     $mv=Get-VM | Where-Object { ($_.Name -eq 'alpine_script_nil_on') }
     if ($mv -eq $null){
         #Canviar nom i engegar VM Off
-        Set-VM -VM $alpineOff -Name 'alpine_script_nil_on' -Confirm:$false
-        Start-VM -VM $alpineOff
+        try {
+            Set-VM -VM $alpineOff -Name 'alpine_script_nil_on' -Confirm:$false 
+            Write-Log -Message "S'ha canviat el nom de la VM off a VM on" -Path $LOGDIR -Level Info
+            Start-VM -VM $alpineOff
+            Write-Log -Message "S'ha engegat la VM on" -Path $LOGDIR -Level Info
+        }catch {
+            Write-Log -Message "error al canviar el nom o engegar la VM alpine off" -Path $LOGDIR -Level error
+        }
         $vm = $alpineOff
         Write-Log -Message "No s'ha trobat la maquina alpine on per lo que s'ha canviat el nom de l'alpine off, s'ha engegat i s'ha creat un nou alpine off" -Path $LOGDIR -Level Info
 
         #Tornar a crear la VM Off
         $alpineOff  = agafarVMOff -plantilla $alpine_plantilla
     }
-    return $mv, $alpineOff
+    return $vm, $alpineOff
 }
 
 function comprovarConnexio {
@@ -163,8 +169,9 @@ $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_p
 
 #Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
 $ip = aconseguirIP -vm $alpine_on
-$funiona=comprovarConnexio -ip $ip
-if ($funiona) {
+Write-Host $ip
+$funciona=comprovarConnexio -ip $ip
+if ($funciona) {
     Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
 }
 else {
