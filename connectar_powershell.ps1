@@ -168,8 +168,10 @@ $alpine_off = agafarVMOff -plantilla $alpine_plantilla
 $alpine_on, $alpine_off = agafarVMOn -alpineOff $alpine_off -plantilla $alpine_plantilla
 
 #Comprovar si funciona el servei web, en cas de que no funcioni elimina la maquina i aixeca la que esta parada
+Start-Sleep -Seconds 20
 $ip = aconseguirIP -vm $alpine_on
 Write-Host $ip
+$ip = "172.24.20.113"
 $funciona=comprovarConnexio -ip $ip
 if ($funciona) {
     Write-Log -Message "La connexió funciona correctament amb la VM alpine" -Path $LOGDIR -Level Info
