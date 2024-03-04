@@ -6,14 +6,33 @@ PASSWORD="Patata1234"
 DATABASE="equips"
 def connect():
     try:
-        return connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        database=DATABASE
+        connexio = connector.connect(
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE
         )
+
+        cursor = connexio.cursor()
+
+        # Crear la taula si no existeix
+        cursor.execute(f"""
+            CREATE TABLE IF NOT EXISTS {TABLE} (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                data_id INT,
+                mac VARCHAR(255),
+                ram INT,
+                cpu INT,
+                -- Altres camps que puguis necessitar
+                UNIQUE(data_id, mac)
+            )
+        """)
+
+        return connexio
+
     except connector.Error as err:
         return err
+
 
 
 def insertRow(connexio, valors):

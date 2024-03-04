@@ -1,4 +1,3 @@
-Import-Module VMware.VimAutomation.Core
 
 #Constants
 $LOGDIR="/var/log/projecte.log"

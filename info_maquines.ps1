@@ -25,4 +25,6 @@ function desconnectar {
 
 connectar
 
+python ./connexioBD.py
+
 desconnectar
