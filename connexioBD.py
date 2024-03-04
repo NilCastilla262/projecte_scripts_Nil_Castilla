@@ -1,6 +1,6 @@
-import Class.BD as BD
+from BD import connect, insertRow, selectALL, updateRow, deleteRow, close
 
-connexio=BD.connect()
+connexio=connect()
 
 """
 result=BD.insertRow(connexio, ["PC1", "172.19.1.15"])
@@ -16,4 +16,4 @@ result=BD.deleteRow(connexio, "172.19.1.15")
 result = BD.selectALL(connexio)
 BD.imprimir(result)
 """
-BD.close(connexio)
+close(connexio)

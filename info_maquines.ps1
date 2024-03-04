@@ -23,8 +23,8 @@ function desconnectar {
     Disconnect-VIServer -Server $connexio.Name -Confirm:$false
 }
 
-connectar
+$connexio_nil = connectar
 
 python ./connexioBD.py
 
-desconnectar
+desconnectar -connexio $connexio_nil

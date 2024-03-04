@@ -10,10 +10,13 @@ def connect():
             host=HOST,
             user=USER,
             password=PASSWORD,
-            database=DATABASE
         )
 
         cursor = connexio.cursor()
+        
+        # Crear la base de dades si no existeix
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE}")
+        cursor.execute(f"USE {DATABASE}")
 
         # Crear la taula si no existeix
         cursor.execute(f"""
@@ -23,7 +26,7 @@ def connect():
                 mac VARCHAR(255),
                 ram INT,
                 cpu INT,
-                -- Altres camps que puguis necessitar
+                Estat BOOL,
                 UNIQUE(data_id, mac)
             )
         """)
@@ -72,4 +75,10 @@ def deleteRow(connexio, ip):
         return err
 
 def close(connexio):
-    connexio.close()
+    try:
+        connexio.close()
+    except connector.error as err:
+        return err
+
+connexio=connect()
+close(connexio)
