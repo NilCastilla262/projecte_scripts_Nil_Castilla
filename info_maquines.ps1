@@ -56,6 +56,6 @@ $connexio_nil = connectar
 
 $dades=obtenirDadesVM
 Write-Host $dades
-python ./connexioBD.py
+python /home/nil/projecte/connexioBD.py
 
 desconnectar -connexio $connexio_nil
