@@ -51,7 +51,7 @@ function obtenirDadesVM {
         # Afegir l'objecte a l'array
         $dadesVM += $dades
     }
-    return $dadesVM
+    return $dadesVM | ConvertTo-Json
 }
 
 
