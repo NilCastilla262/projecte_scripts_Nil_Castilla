@@ -1,6 +1,6 @@
 from mysql import connector
 TABLE="hosts"
-HOST="172.24.20.4"
+HOST="172.24.20.100"
 USER="root"
 PASSWORD="Patata1234"
 DATABASE="equips"
