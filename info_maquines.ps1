@@ -36,7 +36,7 @@ function obtenirDadesVM {
         $vmId = $vm.Id
         $ram = $vm.MemoryGB
         $cpu = $vm.NumCpu
-        $mac = $vm.NetworkAdapters.MacAddress
+        $disc = $vm.HardDisks.CapacityGB
 
         # Crear un objecte PowerShell amb les dades de la VM
         $dades = [PSCustomObject]@{
@@ -44,7 +44,7 @@ function obtenirDadesVM {
             VmId = $vmId
             Ram = $ram
             Cpu = $cpu
-            Mac = $mac
+            Disc = $disc
             Estat = $true
         }
 
@@ -58,7 +58,7 @@ function obtenirDadesVM {
 $connexio_nil = connectar
 
 $dades=obtenirDadesVM
-
+Write-Host $dades
 python ./connexioBD.py
 
 desconnectar -connexio $connexio_nil

@@ -22,7 +22,7 @@ def connect():
         cursor.execute(f"""
             CREATE TABLE IF NOT EXISTS {TABLE} (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                mac VARCHAR(255),
+                disc VARCHAR(255),
                 ram INT,
                 cpu INT,
                 Estat BOOL,
