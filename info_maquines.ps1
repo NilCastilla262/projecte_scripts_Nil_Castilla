@@ -23,7 +23,41 @@ function desconnectar {
     Disconnect-VIServer -Server $connexio.Name -Confirm:$false
 }
 
+
+function obtenirDadesVM {
+    $vms = Get-VM
+
+    #Crear array associatiu per les vm
+    $dadesVM = @()
+
+    #Recòrrer les VMs i afegir les dades a l'array associatiu
+    foreach ($vm in $vms) {
+        $dataId = Get-Date -Format "yyyyMMddHHmmss"
+        $vmId = $vm.Id
+        $ram = $vm.MemoryGB
+        $cpu = $vm.NumCpu
+        $mac = $vm.NetworkAdapters.MacAddress
+
+        # Crear un objecte PowerShell amb les dades de la VM
+        $dades = [PSCustomObject]@{
+            DataId = $dataId
+            VmId = $vmId
+            Ram = $ram
+            Cpu = $cpu
+            Mac = $mac
+            Estat = $true
+        }
+
+        # Afegir l'objecte a l'array
+        $dadesVM += $dades
+    }
+    return $dadesVM
+}
+
+
 $connexio_nil = connectar
+
+$dades=obtenirDadesVM
 
 python ./connexioBD.py
 
