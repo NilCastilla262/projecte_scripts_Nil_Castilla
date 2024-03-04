@@ -36,7 +36,6 @@ function obtenirDadesVM {
         $vmId = $vm.Id
         $ram = $vm.MemoryGB
         $cpu = $vm.NumCpu
-        $disc = $vm.HardDisks.CapacityGB
 
         # Crear un objecte PowerShell amb les dades de la VM
         $dades = [PSCustomObject]@{
@@ -44,7 +43,6 @@ function obtenirDadesVM {
             VmId = $vmId
             Ram = $ram
             Cpu = $cpu
-            Disc = $disc
             Estat = $true
         }
 
@@ -53,7 +51,6 @@ function obtenirDadesVM {
     }
     return $dadesVM | ConvertTo-Json
 }
-
 
 $connexio_nil = connectar
 
