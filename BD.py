@@ -21,12 +21,10 @@ def connect():
         # Crear la taula si no existeix
         cursor.execute(f"""
             CREATE TABLE IF NOT EXISTS {TABLE} (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                disc VARCHAR(255),
+                id VARCHAR(255) PRIMARY KEY,
                 ram INT,
                 cpu INT,
                 Estat BOOL,
-                UNIQUE(data_id, mac)
             )
         """)
 
@@ -55,7 +53,7 @@ def selectALL(connexio):
 
 def updateRow(connexio, ip, hostname):
     cursor=connexio.cursor()
-    sql=(f"UPDATE {TABLE} SET hostname = {hostname} WHERE ip = {ip}")
+    sql = f"INSERT INTO {TABLE} (id, ram, cpu, Estat) VALUES ('{valors[0]}', {valors[1]}, {valors[2]}, {valors[3]})"
     try:
         cursor.execute(sql)
         connexio.commit()
